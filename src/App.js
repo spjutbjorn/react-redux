@@ -7,20 +7,38 @@ class App extends Component {
     super(props)
     this.state = {
       runnerLog:[{
-        name: "Hugo"
       }]
     }
+    this.setState({runnerLog : this.fetchData()});
   }
 
   handleClick = () => {
     this.setState({
       runnerLog: this.state.runnerLog.concat({name:this.currentName.value})
     });
-
+    this.saveData();
     this.currentName.value = "";
 
     //console.log(this.currentName.value);
   };
+
+  saveData = ()=> {
+    fetch('http://localhost:9999/savedata/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      },
+    body: JSON.stringify(this.state.runnerLog)
+    })
+  }
+
+  fetchData=()=>{
+    fetch('http://localhost:9999/savedata/')
+      .then(response => {
+              return response.json();
+      })
+  }
 
   render() {
     console.log(this.state.runnerLog);

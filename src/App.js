@@ -5,11 +5,14 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      runnerLog:[{
-      }]
+    var data = this.fetchData();
+
+    if (data) {
+      this.state = data;
     }
-    this.setState({runnerLog : this.fetchData()});
+    else {
+      this.state = {runnerLog: []};
+    }
   }
 
   handleClick = () => {
@@ -27,7 +30,7 @@ class App extends Component {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-      'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
     body: JSON.stringify(this.state.runnerLog)
     })
@@ -37,7 +40,9 @@ class App extends Component {
     fetch('http://localhost:9999/savedata/')
       .then(response => {
               return response.json();
-      })
+      }).catch(error => {
+        console.log("Fetch error")        
+      }) 
   }
 
   render() {

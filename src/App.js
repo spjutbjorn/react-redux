@@ -12,9 +12,15 @@ class App extends Component {
     }
   }
 
-  handleClick= (e,data)=>{
-    console.log(data, this.rel.name)
-  }
+  handleClick = () => {
+    console.log(this.state.runnerLog);
+    console.log(this.currentName.value);
+    
+    
+    this.setState({
+      runnerLog: this.state.runnerLog.concat({name:this.currentName.value})
+    })
+  };
 
   render() {
     return (
@@ -26,13 +32,15 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <input rel='name' id='name'/>
-        <button onclick={this.handleClick}>Save</button>
+        <input type="text" ref={(name) => {this.currentName = name}} />
+        <button onClick={this.handleClick}>Save</button>
         <div>
           <table>
-            {this.state.runnerLog.map(log=>{
-              return <tr><td>{log.name}</td></tr>
-            })}
+            <tbody>
+              {this.state.runnerLog.map(log=>{
+                return <tr><td>{log.name}</td></tr>
+              })}
+            </tbody>
           </table>
         </div>
       </div>

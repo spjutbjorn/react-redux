@@ -13,16 +13,17 @@ class App extends Component {
   }
 
   handleClick = () => {
-    console.log(this.state.runnerLog);
-    console.log(this.currentName.value);
-    
-    
     this.setState({
       runnerLog: this.state.runnerLog.concat({name:this.currentName.value})
-    })
+    });
+
+    this.currentName.value = "";
+
+    //console.log(this.currentName.value);
   };
 
   render() {
+    console.log(this.state.runnerLog);
     return (
       <div className="App">
         <header className="App-header">
